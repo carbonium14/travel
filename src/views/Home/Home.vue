@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HomeHeader :city="city"></HomeHeader>
+    <HomeHeader></HomeHeader>
     <HomeSwiper :list="swiperList"></HomeSwiper>
     <HomeIcons :list="iconList"></HomeIcons>
     <HomeRecommend :list="recommendList"></HomeRecommend>
@@ -26,7 +26,6 @@ export default {
   },
   data () {
     return {
-      city: '北京',
       swiperList: [{
         id: '0001',
         imgUrl: 'http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg'

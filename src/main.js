@@ -9,6 +9,7 @@ import { faChevronLeft, faMagnifyingGlass, faChevronDown } from '@fortawesome/fr
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import store from './store/index.js'
 library.add(faChevronLeft, faMagnifyingGlass, faChevronDown)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueAwesomeSwiper)
@@ -16,5 +17,6 @@ Vue.config.productionTip = false
 FastClick.attach(document.body)
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
