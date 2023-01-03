@@ -2,8 +2,8 @@
   <div>
     <CityHeader></CityHeader>
     <CitySearch></CitySearch>
-    <CityList :list="cities" :hot="hotCities"></CityList>
-    <CityAlphabet :list="cities"></CityAlphabet>
+    <CityList :list="cities" :hot="hotCities" :letter="letter"></CityList>
+    <CityAlphabet :list="cities" @change="handleLetterChange"></CityAlphabet>
   </div>
 </template>
 
@@ -64,7 +64,8 @@ export default {
         id: 125,
         spell: 'guilin',
         name: '桂林'
-      }]
+      }],
+      letter: ''
     }
   },
   methods: {
@@ -79,6 +80,9 @@ export default {
     //     this.hotCities = data.hotCities
     //   }
     // }
+    handleLetterChange (letter) {
+      this.letter = letter
+    }
   },
   mounted () {
     // this.getCityInfo()
