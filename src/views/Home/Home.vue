@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 // import axios from 'axios'
 import HomeHeader from './components/Header.vue'
 import HomeSwiper from './components/Swiper.vue'
@@ -26,6 +27,7 @@ export default {
   },
   data () {
     return {
+      lastCity: '',
       swiperList: [{
         id: '0001',
         imgUrl: 'http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg'
@@ -130,9 +132,12 @@ export default {
       }]
     }
   },
+  computed: {
+    ...mapState(['city'])
+  },
   methods: {
     // getHomeInfo () {
-    //   axios.get('/static/mock/index.json').then(this.getHomeInfoSucc)
+    //   axios.get('/static/mock/index.json?city='+'this.city').then(this.getHomeInfoSucc)
     // },
     // getHomeInfoSucc (res) {
     //   res = res.data
@@ -147,7 +152,14 @@ export default {
     // }
   },
   mounted () {
+    this.lastCity = this.city
     // this.getHomeInfo()
+  },
+  activated () {
+    if (this.lastCity !== this.city) {
+      this.lastCity = this.city
+      // this.getHomeInfo ()
+    }
   }
 }
 </script>
