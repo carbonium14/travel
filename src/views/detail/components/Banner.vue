@@ -8,7 +8,7 @@
                 </div>
                 <div class="banner-number">
                     <font-awesome-icon icon="fa-solid fa-image" class="banner-icon"/>
-                    {{ this.gallaryImgs.length }}
+                    {{ gallaryImgs.length }}
                 </div>
             </div>
         </div>
@@ -21,6 +21,7 @@
 <script>
 import CommonGallery from '../../../components/gallery/Gallery.vue'
 import Fade from '../../../components/fade/Fade.vue'
+import { ref } from 'vue'
 export default {
   name: 'DetailBanner',
   props: {
@@ -38,17 +39,18 @@ export default {
     CommonGallery,
     Fade
   },
-  data () {
-    return {
-      showGallery: false
+  setup () {
+    const showGallery = ref(false)
+    const handlerBannerClick = () => {
+      showGallery.value = true
     }
-  },
-  methods: {
-    handlerBannerClick () {
-      this.showGallery = true
-    },
-    handleGalleryClose () {
-      this.showGallery = false
+    const handleGalleryClose = () => {
+      showGallery.value = false
+    }
+    return {
+      showGallery,
+      handlerBannerClick,
+      handleGalleryClose
     }
   }
 }

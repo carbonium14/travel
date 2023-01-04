@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 export default {
   name: 'HomeIcons',
   props: {
@@ -21,17 +22,13 @@ export default {
       type: Array
     }
   },
-  data () {
-    return {
-      swiperOption: {
-        autoplay: false
-      }
+  setup (props) {
+    const swiperOption = {
+      autoplay: false
     }
-  },
-  computed: {
-    pages () {
+    const pages = computed(() => {
       const pages = []
-      this.list.forEach((item, index) => {
+      props.list.forEach((item, index) => {
         const page = Math.floor(index / 8)
         if (!pages[page]) {
           pages[page] = []
@@ -39,6 +36,10 @@ export default {
         pages[page].push(item)
       })
       return pages
+    })
+    return {
+      swiperOption,
+      pages
     }
   }
 }

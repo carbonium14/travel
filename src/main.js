@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue, { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 // import FastClick from 'fastclick'
@@ -13,11 +13,5 @@ import store from './store/index.js'
 import 'babel-polyfill'
 library.add(faChevronLeft, faMagnifyingGlass, faChevronDown, faImage)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.use(VueAwesomeSwiper)
-Vue.config.productionTip = false
 // FastClick.attach(document.body)
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+createApp(App).use(router).use(store).use(VueAwesomeSwiper).mount('#app')

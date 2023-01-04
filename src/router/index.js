@@ -1,9 +1,4 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-// import Home from '../views/Home/Home.vue'
-// import City from '../views/City/City.vue'
-// import Detail from '../views/detail/Detail.vue'
-Vue.use(VueRouter)
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [{
   path: '/',
@@ -19,8 +14,10 @@ const routes = [{
   component: () => import('../views/detail/Detail.vue')
 }]
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHashHistory(),
   routes,
+
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   }

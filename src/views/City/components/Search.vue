@@ -14,7 +14,9 @@
 
 <script>
 import BScroll from 'better-scroll'
-import { mapMutations } from 'vuex'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { ref, computed, watch, onMounted } from 'vue'
 export default {
   name: 'CitySearch',
   props: {
@@ -22,51 +24,54 @@ export default {
       type: Object
     }
   },
-  data () {
-    return {
-      keyword: '',
-      list: [],
-      timer: null
+  setup (props) {
+    const keyword = ref('')
+    const list = ref([])
+    let timer = null
+    const store = useStore()
+    const router = useRouter()
+    let scroll = null
+    const search = ref(null)
+    const hasNoData = computed(() => {
+      return !list.value.length
+    })
+    const handleCityClick = (city) => {
+      store.commit('changeCity', city)
+      router.push('/')
     }
-  },
-  methods: {
-    handleCityClick (city) {
-      this.changeCity(city)
-      this.$router.push('/')
-    },
-    ...mapMutations(['changeCity'])
-  },
-  computed: {
-    hasNoData () {
-      return !this.list.length
-    }
-  },
-  watch: {
-    keyword () {
-      if (this.timer) {
-        clearTimeout(this.timer)
+    watch(keyword, (keyword) => {
+      if (timer) {
+        clearTimeout(timer)
       }
-      if (!this.keyword) {
-        this.list = []
+      if (!keyword) {
+        list.value = []
         return
       }
-      this.timer = setTimeout(() => {
+      timer = setTimeout(() => {
         const result = []
-        for (const i in this.cities) {
-          this.cities[i].forEach(value => {
-            if (value.spell.indexOf(this.keyword) > -1 || value.name.indexOf(this.keyword) > -1) {
+        for (const i in props.cities) {
+          props.cities[i].forEach(value => {
+            if (value.spell.indexOf(keyword) > -1 || value.name.indexOf(keyword) > -1) {
               result.push(value)
             }
           })
         }
-        this.list = result
+        list.value = result
       }, 100)
-    }
-  },
-  mounted () {
-    this.scroll = new BScroll(this.$refs.search, {
-      click: true
     })
+    onMounted(() => {
+      scroll = new BScroll(search.value, {
+        click: true
+      })
+    })
+    return {
+      keyword,
+      list,
+      hasNoData,
+      search,
+      scroll,
+      handleCityClick
+    }
   }
 }
 </script>

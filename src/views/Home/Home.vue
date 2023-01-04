@@ -1,15 +1,16 @@
 <template>
   <div>
     <HomeHeader></HomeHeader>
-    <HomeSwiper :list="swiperList"></HomeSwiper>
-    <HomeIcons :list="iconList"></HomeIcons>
-    <HomeRecommend :list="recommendList"></HomeRecommend>
-    <HomeWeekend :list="weekendList"></HomeWeekend>
+    <HomeSwiper :list="data.swiperList"></HomeSwiper>
+    <HomeIcons :list="data.iconList"></HomeIcons>
+    <HomeRecommend :list="data.recommendList"></HomeRecommend>
+    <HomeWeekend :list="data.weekendList"></HomeWeekend>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { useStore } from 'vuex'
+import { reactive } from 'vue'
 // import axios from 'axios'
 import HomeHeader from './components/Header.vue'
 import HomeSwiper from './components/Swiper.vue'
@@ -25,9 +26,9 @@ export default {
     HomeRecommend,
     HomeWeekend
   },
-  data () {
-    return {
-      lastCity: '',
+  setup () {
+    const data = reactive({
+      // lastCity: '',
       swiperList: [{
         id: '0001',
         imgUrl: 'http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg'
@@ -130,37 +131,40 @@ export default {
         title: '儿童剧场，孩子的乐园',
         desc: '带宝贝观看演出，近距离体验艺术的无穷魅力'
       }]
-    }
-  },
-  computed: {
-    ...mapState(['city'])
-  },
-  methods: {
-    // getHomeInfo () {
-    //   axios.get('/static/mock/index.json?city='+'this.city').then(this.getHomeInfoSucc)
-    // },
-    // getHomeInfoSucc (res) {
-    //   res = res.data
-    //   if (res.ret && res.data) {
-    //     const data = res.data
-    //     this.city = data.city
-    //     this.swiperList = data.swiperList
-    //     this.iconList = data.iconList
-    //     this.recommendList = data.recommendList
-    //     this.weekendList = data.weekendList
+    })
+    // const store = useStore()
+    // const city = store.state.city
+    // onMounted(() => {
+    //   data.lastCity = city
+    //   // this.getHomeInfo()
+    // })
+    // onActivated(() => {
+    //   if (data.lastCity !== city) {
+    //     data.lastCity = city
+    //     // this.getHomeInfo ()
     //   }
-    // }
-  },
-  mounted () {
-    this.lastCity = this.city
-    // this.getHomeInfo()
-  },
-  activated () {
-    if (this.lastCity !== this.city) {
-      this.lastCity = this.city
-      // this.getHomeInfo ()
+    // })
+    return {
+      data
+      // city
     }
   }
+  // methods: {
+  //   // getHomeInfo () {
+  //   //   axios.get('/static/mock/index.json?city='+'city.value').then(getHomeInfoSucc)
+  //   // },
+  //   // getHomeInfoSucc (res) {
+  //   //   res = res.data
+  //   //   if (res.ret && res.data) {
+  //   //     const data = res.data
+  //   //     this.city = data.city
+  //   //     this.swiperList = data.swiperList
+  //   //     this.iconList = data.iconList
+  //   //     this.recommendList = data.recommendList
+  //   //     this.weekendList = data.weekendList
+  //   //   }
+  //   // }
+  // },
 }
 </script>
 

@@ -1,13 +1,14 @@
 <template>
   <ul class="list">
-    <li class="item" v-for="(item) of letters" :key="item" :ref="item"
-    @click="handleLetterClick" @touchstart.prevent="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
+    <li class="item" v-for="(item) of letters" :key="item" :ref="elem => elems[item] = elem"
+    @click="handleLetterClick" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
       {{ item }}
     </li>
   </ul>
 </template>
 
 <script>
+import { computed, ref, onUpdated } from 'vue'
 export default {
   name: 'CityAlphabet',
   props: {
@@ -15,48 +16,51 @@ export default {
       type: Object
     }
   },
-  computed: {
-    letters () {
+  setup (props, context) {
+    const letters = computed(() => {
       const letters = []
-      for (const i in this.list) {
+      for (const i in props.list) {
         letters.push(i)
       }
       return letters
+    })
+    let touchStatus = false
+    let starty = 0
+    let timer = null
+    const elems = ref([])
+    onUpdated(() => {
+      starty = elems.value.A.offsetTop
+    })
+    const handleLetterClick = (e) => {
+      context.emit('change', e.target.innerText)
     }
-  },
-  data () {
-    return {
-      touchStatus: false,
-      starty: 0,
-      timer: null
+    const handleTouchStart = () => {
+      touchStatus = true
     }
-  },
-  updated () {
-    this.starty = this.$refs.A[0].offsetTop
-  },
-  methods: {
-    handleLetterClick (e) {
-      this.$emit('change', e.target.innerText)
-    },
-    handleTouchStart () {
-      this.touchStatus = true
-    },
-    handleTouchMove (e) {
-      if (this.touchStatus === true) {
-        if (this.timer) {
-          clearTimeout(this.timer)
+    const handleTouchMove = (e) => {
+      if (touchStatus === true) {
+        if (timer) {
+          clearTimeout(timer)
         }
-        this.timer = setTimeout(() => {
+        timer = setTimeout(() => {
           const touchy = e.touches[0].clientY - 79
-          const index = Math.floor((touchy - this.starty) / 20)
-          if (index >= 0 && index <= this.letters.length) {
-            this.$emit('change', this.letters[index])
+          const index = Math.floor((touchy - starty) / 20)
+          if (index >= 0 && index <= letters.value.length) {
+            context.emit('change', letters.value[index])
           }
         }, 8)
       }
-    },
-    handleTouchEnd () {
-      this.touchStatus = false
+    }
+    const handleTouchEnd = () => {
+      touchStatus = false
+    }
+    return {
+      letters,
+      elems,
+      handleLetterClick,
+      handleTouchStart,
+      handleTouchMove,
+      handleTouchEnd
     }
   }
 }
