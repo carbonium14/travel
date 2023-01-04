@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import store from './store/index.js'
+import 'babel-polyfill'
 library.add(faChevronLeft, faMagnifyingGlass, faChevronDown, faImage)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueAwesomeSwiper)
