@@ -1,18 +1,18 @@
 <template>
     <div>
         <div class="banner" @click="handlerBannerClick">
-            <img class="banner-image" src="" alt="图片">
+            <img class="banner-image" :src="bannerImg" alt="图片">
             <div class="banner-info">
                 <div class="banner-title">
-                    大连海洋世界
+                    {{ sightName }}
                 </div>
                 <div class="banner-number">
                     <font-awesome-icon icon="fa-solid fa-image" class="banner-icon"/>
-                    39
+                    {{ this.gallaryImgs.length }}
                 </div>
             </div>
         </div>
-        <CommonGallery @close="handleGalleryClose" :images="images" v-show="showGallery"></CommonGallery>
+        <CommonGallery @close="handleGalleryClose" :images="gallaryImgs" v-show="showGallery"></CommonGallery>
     </div>
 </template>
 
@@ -20,12 +20,22 @@
 import CommonGallery from '../../../components/gallery/Gallery.vue'
 export default {
   name: 'DetailBanner',
+  props: {
+    sightName: {
+      type: String
+    },
+    bannerImg: {
+      type: String
+    },
+    gallaryImgs: {
+      type: Array
+    }
+  },
   components: {
     CommonGallery
   },
   data () {
     return {
-      images: [],
       showGallery: false
     }
   },
