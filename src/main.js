@@ -5,12 +5,12 @@ import router from './router'
 import './assets/styles/reset.css'
 import './assets/styles/border.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronLeft, faMagnifyingGlass, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faMagnifyingGlass, faChevronDown, faImage } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import store from './store/index.js'
-library.add(faChevronLeft, faMagnifyingGlass, faChevronDown)
+library.add(faChevronLeft, faMagnifyingGlass, faChevronDown, faImage)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
