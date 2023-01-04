@@ -63,7 +63,7 @@ export default {
     //   }
     // }
   },
-  mounetd () {
+  mounted () {
     // this.getDetailInfo()
   }
 }
